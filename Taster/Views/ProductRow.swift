@@ -7,20 +7,18 @@ struct ProductRow: View {
         HStack {
             VStack(alignment: .leading) {
                 Text(product.name)
-                    .font(.subheadline)
-                    .fontWeight(.medium)
                 
-                Text(product.brand)
-                    .font(.caption)
+                Text(product.variant == "" ? product.brand : "\(product.brand) • \(product.variant)")
+                    .font(.subheadline)
                     .foregroundColor(.secondary)
             }
         }
-        .padding(.vertical, 8.0)
+        .padding(.vertical, 6.0)
     }
 }
 
 struct ProductRow_Previews: PreviewProvider {
     static var previews: some View {
-        ProductRow(product: Product(name: "Caramel Macchiato", brand: "Starbucks", review: Review(.A, "Trop bon !")))
+        ProductRow(product: Store.DEFAULT.getById(0)!)
     }
 }

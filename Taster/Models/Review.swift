@@ -1,21 +1,18 @@
 import Foundation
 
-class Review {
-    enum Grade: String {
-        case F = "", E = "⭐️", D = "⭐️⭐️", C = "⭐️⭐️⭐️", B = "⭐️⭐️⭐️⭐️", A = "⭐️⭐️⭐️⭐️⭐️"
-        
-        static func all() -> [Grade] {
-            return [ .A, .B, .C, .D, .E, .F ]
-        }
+struct Review: Codable {
+    enum Grade: String, Codable {
+        case F = "⁄", E = "⭐️", D = "⭐️⭐️", C = "⭐️⭐️⭐️", B = "⭐️⭐️⭐️⭐️", A = "⭐️⭐️⭐️⭐️⭐️"
+        static func all() -> [Grade] { return [ .A, .B, .C, .D, .E, .F ] }
     }
     
     var grade: Grade
-    var review: String?
+    var opinion: String
     
-    init(_ grade: Grade, _ review: String? = nil) {
+    init(_ grade: Grade, _ opinion: String = "") {
         self.grade = grade
-        self.review = review
+        self.opinion = opinion
     }
     
-    static let BASIC_A = Review(.A), BASIC_B = Review(.B), BASIC_C = Review(.C), BASIC_D = Review(.D), BASIC_E = Review(.E), BASIC_F = Review(.F)
+    static let A = Review(.A), B = Review(.B), C = Review(.C), D = Review(.D), E = Review(.E), F = Review(.F)
 }

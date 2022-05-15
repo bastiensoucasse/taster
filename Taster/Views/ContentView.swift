@@ -1,7 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
-    let store: Store = .DEFAULT
+    let store: Store = Store()
     
     var body: some View {
         TabView {

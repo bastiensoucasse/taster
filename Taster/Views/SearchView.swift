@@ -2,16 +2,22 @@ import SwiftUI
 
 struct SearchView: View {
     @StateObject var store: Store
+    @State private var showingAddProductSheet = false
     
     var body: some View {
         NavigationView {
             List {
-                /// TODO: Overview.
+                /// TODO: Search.
             }
             .navigationTitle("Search")
             .toolbar {
-                NavigationLink(destination: AddProductView(store: store)) {
-                    Text("Add Product")
+                Button {
+                    showingAddProductSheet.toggle()
+                } label: {
+                    Text("Add")
+                }
+                .sheet(isPresented: $showingAddProductSheet) {
+                    AddProductView(store: store)
                 }
             }
         }

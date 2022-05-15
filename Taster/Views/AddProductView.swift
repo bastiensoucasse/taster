@@ -2,14 +2,70 @@ import SwiftUI
 
 struct AddProductView: View {
     @StateObject var store: Store
+    @State private var name: String = ""
+    @State private var brand: String = ""
+    @State private var variant: String = ""
+    @State private var grade: Review.Grade = .A
+    @State private var opinion: String = ""
     
-    /// TODO: Implement a view dedicated to adding a product, a form containing:
-    /// - The name.
-    /// - The brand.
-    /// - The grade.
-    /// - The review.
+    @Environment(\.dismiss) var dismiss
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        NavigationView {
+            Form {
+                Section {
+                    TextField("Caramel Macchiato", text: $name)
+                } header: {
+                    Text("Name")
+                }
+                
+                Section {
+                    TextField("Starbucks", text: $brand)
+                } header: {
+                    Text("Brand")
+                }
+                
+                Section {
+                    TextField("Coco Milk", text: $variant)
+                } header: {
+                    Text("Variant")
+                }
+                
+                Section {
+                    Picker("Grade", selection: $grade) {
+                        ForEach(Review.Grade.all(), id: \.self) { grade in
+                            Text(grade.rawValue).tag(grade)
+                        }
+                    }.pickerStyle(.menu)
+                    
+                    TextField("In my opinion…", text: $opinion)
+                } header: {
+                    Text("Review")
+                }
+            }
+            .navigationTitle("New Product")
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .confirmationAction) {
+                    Button {
+                        store.push(Product(id: store.getAvailableId(), name: name, brand: brand, variant: variant, review: Review(grade, opinion)))
+                        dismiss()
+                    } label: {
+                        Text("Add")
+                            .fontWeight(.semibold)
+                    }
+                }
+                
+                
+                ToolbarItem(placement: .cancellationAction) {
+                    Button {
+                        dismiss()
+                    } label: {
+                        Text("Cancel")
+                    }
+                }
+            }
+        }
     }
 }
 
